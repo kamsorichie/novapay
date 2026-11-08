@@ -2,3 +2,5 @@ Flask
 Flask-WTF
 Flask-Limiter
 python-dotenv
+psycopg[binary]
+gunicorn
