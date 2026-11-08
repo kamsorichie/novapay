@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaPay Owner Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h2>Nova<span>Pay</span> Admin</h2>
+    <a href="/admin/logout">Logout</a>
+</header>
+
+<main>
+
+    <h1>Welcome, Kamsorichie 👋</h1>
+    <p class="subtitle">Private Owner Dashboard</p>
+    <section class="card">
+    <h2>Platform Analytics</h2>
+
+    <p>Total Registered Users: {{ total_users }}</p>
+    <p>Active Users: {{ active_users }}</p>
+    <p>Suspended Users: {{ suspended_users }}</p>
+
+    <p>Total Transfers: {{ total_transactions }}</p>
+    <p>Total Transfer Volume: ₦{{ "{:,.2f}".format(total_volume / 100) }}</p>
+
+    <p>Failed Transfers: {{ failed_transfers }}</p>
+    <p>Today's Registrations: {{ today_registrations }}</p>
+    <p>Today's Successful Logins: {{ today_logins }}</p>
+    </section>
+    {% for message in get_flashed_messages() %}
+        <p>{{ message }}</p>
+    {% endfor %}
+
+    <section class="card">
+        <h2>Total Registered Users</h2>
+        <h1>{{ total_users }}</h1>
+    </section>
+
+    <section class="card">
+        <h2>Total Wallet Balances</h2>
+        <h1>₦{{ "{:,.2f}".format(total_balance / 100) }}</h1>
+    </section>
+
+    <section class="card">
+        <h2>Manage Users</h2>
+
+        <form method="GET" action="/admin/dashboard">
+            <input
+                type="text"
+                name="search"
+                placeholder="Search username or account number"
+                value="{{ search_term }}"
+            >
+            <button type="submit">Search</button>
+        </form>
+
+        {% for user in users %}
+        <div class="transaction">
+            <div>
+                <strong>{{ user.username }}</strong>
+                <p>Account: {{ user.account_number }}</p>
+                <p>Balance: ₦{{ "{:,.2f}".format(user.balance / 100) }}</p>
+
+                <p>
+                    Status:
+                    {% if user.is_active %}
+                        Active
+                    {% else %}
+                        Suspended
+                    {% endif %}
+                </p>
+
+                <details>
+                    <summary>View User Details</summary>
+                    <p>User ID: {{ user.id }}</p>
+                    <p>Username: {{ user.username }}</p>
+                    <p>Account Number: {{ user.account_number }}</p>
+                    <p>Wallet Balance: ₦{{ "{:,.2f}".format(user.balance / 100) }}</p>
+                </details>
+                <form method="POST"
+                    action="/admin/user-credit/{{ user.id }}">
+
+                <input type="hidden" name="csrf_token"
+                    value="{{ csrf_token() }}">
+
+                <h3>Fund User Wallet</h3>
+
+                <input
+                    type="number"
+                    name="amount"
+                    placeholder="Amount in Naira"
+                    min="0.01"
+                    step="0.01"
+                    required
+                >
+
+                <input
+                    type="text"
+                    name="note"
+                    placeholder="Reason for funding (optional)"
+                >
+
+                <button type="submit">
+                    Credit User Wallet
+                </button>
+
+                </form>
+                <form method="POST"
+                      action="/admin/user-status/{{ user.id }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    {% if user.is_active %}
+                        <button type="submit" name="action" value="suspend">
+                            Suspend Account
+                        </button>
+                    {% else %}
+                        <button type="submit" name="action" value="activate">
+                            Reactivate Account
+                        </button>
+                    {% endif %}
+
+                </form>
+            </div>
+        </div>
+        {% else %}
+            <p>No matching users found.</p>
+        {% endfor %}
+    </section>
+
+    <section class="card">
+        <h2>All Transactions</h2>
+
+        {% for tx in transactions %}
+        <div class="transaction">
+            <div>
+                <strong>{{ tx.sender }} → {{ tx.receiver }}</strong>
+                <p>{{ tx.date }}</p>
+            </div>
+
+            <strong>
+                ₦{{ "{:,.2f}".format(tx.amount / 100) }}
+            </strong>
+        </div>
+        {% else %}
+            <p>No transactions yet.</p>
+        {% endfor %}
+    </section>
+
+    <section class="card">
+        <h2>Activity Monitor</h2>
+        <p>Latest 100 recorded platform activities.</p>
+
+        {% for log in activity_logs %}
+        <div class="transaction">
+            <div>
+                <strong>{{ log.activity }}</strong>
+                <p>User/Admin: {{ log.username }}</p>
+                <p>{{ log.details }}</p>
+                <p>{{ log.date }}</p>
+            </div>
+        </div>
+        {% else %}
+            <p>No activities recorded yet.</p>
+        {% endfor %}
+    </section>
+
+</main>
+
+</body>
+</html>

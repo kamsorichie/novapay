@@ -1,0 +1,8 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+wallet.db
+*.db
+create_admin.py
+.vscode/

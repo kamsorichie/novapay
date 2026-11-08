@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaPay - Set Transfer PIN</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="auth">
+
+        <h1>Nova<span>Pay</span></h1>
+
+        <h2>Set Transfer PIN</h2>
+        <p>Create a 4-digit PIN to secure your transfers.</p>
+
+        <form method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input
+                type="password"
+                name="pin"
+                placeholder="Enter 4-digit PIN"
+                inputmode="numeric"
+                pattern="[0-9]{4}"
+                maxlength="4"
+                required
+            >
+
+            <button type="submit">Save PIN</button>
+
+        </form>
+
+        {% for message in get_flashed_messages() %}
+            <p>{{ message }}</p>
+        {% endfor %}
+
+        <p><a href="/">Back to Dashboard</a></p>
+
+    </div>
+
+</body>
+</html>

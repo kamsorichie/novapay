@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaPay Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="auth">
+
+    <h1>Nova<span>Pay</span></h1>
+
+    <h2>Create Account</h2>
+    <p>Join NovaPay today</p>
+
+    <form method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="text" name="username"
+        placeholder="Choose username" minlength="3" required>
+
+        <input type="password" name="password"
+        placeholder="Create password" minlength="6" required>
+
+        <button type="submit">Register</button>
+
+    </form>
+
+    {% for message in get_flashed_messages() %}
+        <p>{{ message }}</p>
+    {% endfor %}
+
+    <p>Already registered?
+        <a href="/login">Login</a>
+    </p>
+
+</div>
+
+</body>
+</html>

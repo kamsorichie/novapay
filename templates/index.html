@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaPay Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h2>Nova<span>Pay</span></h2>
+    <a href="/logout">Logout</a>
+</header>
+
+<main>
+
+    <h1>Welcome, {{ user.username }} 👋</h1>
+    <p class="subtitle">Your financial dashboard</p>
+
+    <section class="balance">
+        <p>Available Balance</p>
+        <h1>₦{{ "{:,.2f}".format(user.balance / 100) }}</h1>
+        <span>NovaPay Wallet</span>
+    </section>
+
+    <section class="card account-card">
+        <h2>Your Account Number</h2>
+        <h1>{{ user.account_number }}</h1>
+        <p>Share this number to receive demo transfers.</p>
+        <a href="/set-pin" class="pin-link">Set Transfer PIN</a>
+    </section>
+
+    <section class="actions">
+
+        <div class="card">
+            <h2>Send Money</h2>
+
+            <form action="/send" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input
+                    type="text"
+                    name="receiver"
+                    placeholder="Recipient's 10-digit account number"
+                    pattern="[0-9]{10}"
+                    maxlength="10"
+                    required
+                >
+
+                <input
+                    type="number"
+                    name="amount"
+                    placeholder="Amount (₦)"
+                    min="1"
+                    step="0.01"
+                    required
+                >
+                <input
+                    type="password"
+                    name="pin"
+                    placeholder="Enter your 4-digit PIN"
+                    inputmode="numeric"
+                    pattern="[0-9]{4}"
+                    maxlength="4"
+                    required
+                >
+
+                <button type="submit">Send Money</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Add Funds</h2>
+            <p>Add ₦10,000 in simulated funds.</p>
+
+            <form action="/topup" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit">Add Demo Funds</button>
+            </form>
+        </div>
+
+    </section>
+
+    <section class="history">
+        <h2>Recent Transactions</h2>
+
+        {% for tx in transactions %}
+        <div class="transaction">
+
+            <div>
+                <strong>
+                    {% if tx.receiver == user.username %}
+                        Received from {{ tx.sender }}
+                    {% else %}
+                        Sent to {{ tx.receiver }}
+                    {% endif %}
+                </strong>
+
+                <p>{{ tx.date }}</p>
+            </div>
+
+            <strong>
+                ₦{{ "{:,.2f}".format(tx.amount / 100) }}
+            </strong>
+
+        </div>
+        {% else %}
+        <p>No transactions yet.</p>
+        {% endfor %}
+
+    </section>
+
+    <p class="disclaimer">
+        Demo wallet only. No real money is transferred.
+    </p>
+
+</main>
+
+</body>
+</html>

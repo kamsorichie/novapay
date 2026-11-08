@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaPay Admin Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="auth">
+        <h1>Nova<span>Pay</span></h1>
+
+        <h2>Administrator Login</h2>
+        <p>Private owner access only.</p>
+
+        <form method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input
+                type="text"
+                name="username"
+                placeholder="Admin username"
+                required
+            >
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Admin password"
+                required
+            >
+
+            <button type="submit">Access Dashboard</button>
+        </form>
+
+        {% for message in get_flashed_messages() %}
+            <p>{{ message }}</p>
+        {% endfor %}
+
+    </div>
+
+</body>
+</html>

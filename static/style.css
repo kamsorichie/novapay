@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+body {
+    background: #0b0b14;
+    color: white;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 8%;
+    background: #12121f;
+    border-bottom: 1px solid #29283c;
+}
+
+header h2 {
+    font-size: 27px;
+}
+
+span {
+    color: #a78bfa;
+}
+
+header a {
+    color: #b69cff;
+    text-decoration: none;
+}
+
+main {
+    width: 85%;
+    max-width: 1000px;
+    margin: 45px auto;
+}
+
+h1 {
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #9996ad;
+}
+
+.balance {
+    background: linear-gradient(120deg, #43266e, #211a3c);
+    padding: 35px;
+    border: 1px solid #7954b8;
+    border-radius: 20px;
+    margin: 30px 0;
+}
+
+.balance h1 {
+    font-size: 40px;
+    margin: 15px 0;
+}
+
+.balance p,
+.balance span {
+    color: #d5c7ed;
+}
+
+.actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.card,
+.history {
+    background: #151522;
+    border: 1px solid #29283c;
+    border-radius: 17px;
+    padding: 25px;
+}
+
+.card h2,
+.history h2 {
+    margin-bottom: 20px;
+}
+
+input {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    border: 1px solid #39364f;
+    border-radius: 9px;
+    background: #0d0d18;
+    color: white;
+    outline: none;
+}
+
+input:focus {
+    border-color: #a78bfa;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    background: #9b7bf0;
+    color: #100d1a;
+    font-weight: bold;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #b69cff;
+}
+
+.history {
+    margin-top: 25px;
+}
+
+.transaction {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    border-top: 1px solid #29283c;
+    gap: 12px;
+}
+
+.transaction p {
+    color: #9996ad;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.disclaimer {
+    text-align: center;
+    color: #88849c;
+    font-size: 12px;
+    margin-top: 25px;
+}
+
+.auth {
+    width: 90%;
+    max-width: 420px;
+    margin: 100px auto;
+    padding: 30px;
+    background: #151522;
+    border: 1px solid #39304f;
+    border-radius: 18px;
+}
+
+.auth h1,
+.auth h2,
+.auth p {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.auth a {
+    color: #b69cff;
+    text-decoration: none;
+}
+
+@media(max-width: 700px) {
+    .actions {
+        grid-template-columns: 1fr;
+    }
+
+    main {
+        width: 90%;
+    }
+
+    .balance h1 {
+        font-size: 30px;
+    }
+
+    header {
+        padding: 20px 5%;
+    }
+}
+.account-card {
+    margin-bottom: 25px;
+}
+
+.account-card h1 {
+    color: #a78bfa;
+    letter-spacing: 3px;
+    margin: 12px 0;
+}
+
+.account-card p {
+    color: #9996ad;
+}
+.pin-link {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 18px;
+    background: #9b7bf0;
+    color: #100d1a;
+    text-decoration: none;
+    border-radius: 9px;
+    font-weight: bold;
+}
